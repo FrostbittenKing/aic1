@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for queryResponse complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="queryResponse">
  *   &lt;complexContent>
@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "queryResponse", propOrder = {
@@ -37,11 +37,11 @@ public class QueryResponse {
 
     /**
      * Gets the value of the return property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link WsdlEndpoint }
-     *     
+     *
      */
     public WsdlEndpoint getReturn() {
         return _return;
@@ -49,11 +49,11 @@ public class QueryResponse {
 
     /**
      * Sets the value of the return property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link WsdlEndpoint }
-     *     
+     *
      */
     public void setReturn(WsdlEndpoint value) {
         this._return = value;
