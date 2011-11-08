@@ -11,19 +11,15 @@ public class CreditRequest {
 	private Money money;
 	private String reason;
 	private boolean closed;
-	private RequestChangedListener requestChangedListener;
 
 	public CreditRequest(Customer customer, Collection<Customer> warrantors, Collection<Offer> offers, int durationYears, Money money, String reason) {
+		this.id = System.currentTimeMillis();
 		this.customer = customer;
 		this.warrantors = warrantors;
 		this.offers = offers;
 		this.durationYears = durationYears;
 		this.money = money;
 		this.reason = reason;
-	}
-
-	public void setRequestChangedListener(RequestChangedListener requestChangedListener) {
-		this.requestChangedListener = requestChangedListener;
 	}
 
 	public Collection<Offer> getOffers() {
@@ -42,36 +38,24 @@ public class CreditRequest {
 		return durationYears;
 	}
 
-	public void changeDurationYears(int durationYears) throws RequestAlreadyClosedException {
-		if(closed) {
-			throw new RequestAlreadyClosedException();
-		}
-		this.durationYears = durationYears;
-		requestChangedListener.requestChanged(this);
-	}
-
 	public Money getMoney() {
 		return money;
 	}
 
-	public void changeMoney(Money money) throws RequestAlreadyClosedException {
-		if(closed) {
-			throw new RequestAlreadyClosedException();
-		}
+	public void setDurationYears(int durationYears) {
+		this.durationYears = durationYears;
+	}
+
+	public void setMoney(Money money) {
 		this.money = money;
-		requestChangedListener.requestChanged(this);
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 
 	public String getReason() {
 		return reason;
-	}
-
-	public void changeReason(String reason) throws RequestAlreadyClosedException {
-		if(closed) {
-			throw new RequestAlreadyClosedException();
-		}
-		this.reason = reason;
-		requestChangedListener.requestChanged(this);
 	}
 
 	public long getId() {

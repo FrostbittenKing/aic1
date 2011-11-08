@@ -27,7 +27,7 @@ public class Offer {
 		return status;
 	}
 
-	void setStatus(OfferStatus status) {
+	public void setStatus(OfferStatus status) {
 		this.status = status;
 	}
 

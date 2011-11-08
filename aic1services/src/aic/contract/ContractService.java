@@ -24,10 +24,10 @@ public interface ContractService {
 	 * @param reason Altered reason or null if no change
 	 * @return Newly updated request
 	 */
-	public CreditRequest changeRequest(long requestId, Long durationYears, Money money, String reason) throws NoSuchRequestException;
+	public CreditRequest changeRequest(long requestId, int durationYears, Money money, String reason) throws NoSuchRequestException;
 
 	/**
-	 * Get current offer a given request
+	 * Get current offer of a given request
 	 * @param requestId Request to retrieve offers for
 	 * @return Open offer for that request or null if no offer has been made yet
 	 */
