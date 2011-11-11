@@ -18,6 +18,8 @@ import aic.domain.OfferStatus;
 public class ContractServiceMock {
 	private HashMap<Long, CreditRequest> creditRequests = new HashMap<Long, CreditRequest>();
 	private HashMap<Long, Customer> customers = new HashMap<Long, Customer>();
+
+	
 	
 	public CreditRequest placeRequest(long customerId, Collection<Long> warrantorIds, int durationYears, Money money, String reason) throws NoSuchCustomerException{
 		if (customers.get(customerId) == null){
@@ -88,23 +90,15 @@ public class ContractServiceMock {
 	}
 	
 	public void acceptOffer(long offerId) throws NoSuchOfferException, OfferNotOpenException{
-		Offer currentOffer = null;
-		for(Iterator<CreditRequest> requestIterator = creditRequests.values().iterator(); requestIterator.hasNext();){
-			for(Iterator<Offer> offerIterator = requestIterator.next().getOffers().iterator(); offerIterator.hasNext();){
-				currentOffer = offerIterator.next();
-				if (currentOffer.getId() == offerId){
-					if (currentOffer.getStatus() != OfferStatus.Open){
-						throw new OfferNotOpenException();
-					}
-					currentOffer.setStatus(OfferStatus.Accepted);
-					return;
-				}
-			}
-		}
-		throw new NoSuchOfferException();
+		updateOffer(offerId, OfferStatus.Accepted);
 	}
 	
 	public void declineOffer(long offerId) throws NoSuchOfferException, OfferNotOpenException{
+		 updateOffer(offerId, OfferStatus.Declined);
+	}
+
+	private void updateOffer(long offerId,OfferStatus status) throws OfferNotOpenException,
+			NoSuchOfferException {
 		Offer currentOffer = null;
 		for(Iterator<CreditRequest> requestIterator = creditRequests.values().iterator(); requestIterator.hasNext();){
 			for(Iterator<Offer> offerIterator = requestIterator.next().getOffers().iterator(); offerIterator.hasNext();){
@@ -113,7 +107,7 @@ public class ContractServiceMock {
 					if (currentOffer.getStatus() != OfferStatus.Open){
 						throw new OfferNotOpenException();
 					}
-					currentOffer.setStatus(OfferStatus.Declined);
+					currentOffer.setStatus(status);
 					return;
 				}
 			}

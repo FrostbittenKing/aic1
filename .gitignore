@@ -24,3 +24,5 @@ bin/
 -aic1services/aic1services.iml
 -aic1services/aicwsdl.iml
 -aic1services/bin/
+\#*
+.\#*
