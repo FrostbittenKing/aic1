@@ -20,12 +20,14 @@ import aic.domain.Rating;
 import aic.domain.dto.RequestRatings;
 
 public class ServiceMock {
+	private static ServiceMock instance = null; 
+	
 	private HashMap<Long, CreditRequest> creditRequests = new HashMap<Long, CreditRequest>();
 	private HashMap<Long, Customer> customers = new HashMap<Long, Customer>();
 	
 	private Random generator = new Random();
 	
-	public ServiceMock(){
+	private ServiceMock(){
 		for (long i = 0; i <= 3; i++){
 			customers.put(
 					i,
@@ -164,5 +166,12 @@ public class ServiceMock {
 				 						request.getCustomer().getRating(),
 				 						warrantorRatings);
 		return ratings;
+	}
+	
+	public static ServiceMock getInstance(){
+		if (instance == null){
+			instance = new ServiceMock();
+		}
+		return instance;
 	}
 }
