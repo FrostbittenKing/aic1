@@ -1,47 +1,63 @@
 package aic.contract;
 
-import aic.domain.*;
+import aic.domain.NoSuchCustomerException;
+import aic.domain.NoSuchOfferException;
+import aic.domain.NoSuchRequestException;
+import aic.domain.OfferNotOpenException;
+import aic.domain.dto.Offer;
+import aic.domain.dto.Request;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import java.util.Collection;
 
+@WebService
+@SOAPBinding(style= SOAPBinding.Style.DOCUMENT)
 public interface ContractService {
 	/**
 	 * Places a new request
-	 * @param customerId
-	 * @param warrantorIds
-	 * @param durationYears
-	 * @param money
-	 * @param reason
-	 * @return
+	 * @param request Request to place
+	 * @return offer created for the request
+	 * @throws aic.domain.NoSuchCustomerException
 	 */
-	public CreditRequest placeRequest(long customerId, Collection<Long> warrantorIds, int durationYears, Money money, String reason) throws NoSuchCustomerException;
+	@WebMethod
+	public Offer placeRequest(
+			@WebParam(name = "request", targetNamespace = "")
+			Request request) throws NoSuchCustomerException;
 
 	/**
 	 * Changes a request parameters
-	 * @param requestId Id of the request to change
-	 * @param durationYears Altered duration or null if no change
-	 * @param money Altered money or null if no change
-	 * @param reason Altered reason or null if no change
-	 * @return Newly updated request
+	 * @param request Request with correct id and updated values
+	 * @return offer for updated request
+	 * @throws aic.domain.NoSuchRequestException
 	 */
-	public CreditRequest changeRequest(long requestId, int durationYears, Money money, String reason) throws NoSuchRequestException;
-
-	/**
-	 * Get current offer of a given request
-	 * @param requestId Request to retrieve offers for
-	 * @return Open offer for that request or null if no offer has been made yet
-	 */
-	public Offer getOpenOffer(long requestId) throws NoSuchRequestException;
+	@WebMethod
+	public Offer changeRequest(
+			@WebParam(name = "request", targetNamespace = "")
+			Request request) throws NoSuchRequestException;
 
 	/**
 	 * Accept an open offer
-	 * @param offerId
+	 * @param offer Offer to accept
+	 * @throws aic.domain.NoSuchOfferException
+	 * @throws aic.domain.OfferNotOpenException
 	 */
-	public void acceptOffer(long offerId) throws NoSuchOfferException, OfferNotOpenException;
+	@WebMethod
+	public void acceptOffer(
+			@WebParam(name = "offer", targetNamespace = "")
+			Offer offer) throws NoSuchOfferException, OfferNotOpenException;
 
 	/**
 	 * Declines an open offer
-	 * @param offerId
+	 * @param offer Offer to decline
+	 * @throws aic.domain.NoSuchOfferException
+	 * @throws aic.domain.OfferNotOpenException
 	 */
-	public void declineOffer(long offerId) throws NoSuchOfferException, OfferNotOpenException;
+	@WebMethod
+	public void declineOffer(
+			@WebParam(name = "offer", targetNamespace = "")
+			Offer offer) throws NoSuchOfferException, OfferNotOpenException;
 }
