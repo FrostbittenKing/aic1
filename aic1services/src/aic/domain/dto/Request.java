@@ -3,30 +3,30 @@ package aic.domain.dto;
 import java.util.Collection;
 
 public class Request {
-	private long id;
-	private long customerId;
+	private Long id;
+	private Long customerId;
 	private Collection<Long> warrantorIds;
-	private int durationYears;
+	private Integer durationYears;
 	private String currencyCode;
-	private long amount;
+	private Long amount;
 	private String reason;
 
 	public Request() {
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getCustomerId() {
+	public Long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(long customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 
@@ -38,11 +38,11 @@ public class Request {
 		this.warrantorIds = warrantorIds;
 	}
 
-	public int getDurationYears() {
+	public Integer getDurationYears() {
 		return durationYears;
 	}
 
-	public void setDurationYears(int durationYears) {
+	public void setDurationYears(Integer durationYears) {
 		this.durationYears = durationYears;
 	}
 
@@ -54,11 +54,11 @@ public class Request {
 		this.currencyCode = currencyCode;
 	}
 
-	public long getAmount() {
+	public Long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(long amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 
