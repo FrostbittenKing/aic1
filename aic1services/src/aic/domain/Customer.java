@@ -12,6 +12,15 @@ public class Customer {
 	public Customer() {
 	}
 
+	public Customer(long id, String name, BigDecimal openBalance,
+			String address, Rating rating) {
+		this.id = id;
+		this.name = name;
+		this.openBalance = openBalance;
+		this.address = address;
+		this.rating = rating;
+	}
+
 	public Rating getRating() {
 		return rating;
 	}

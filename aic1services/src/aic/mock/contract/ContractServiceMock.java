@@ -1,9 +1,11 @@
 package aic.mock.contract;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 
 import aic.domain.CreditRequest;
 import aic.domain.Customer;
@@ -14,10 +16,26 @@ import aic.domain.NoSuchRequestException;
 import aic.domain.Offer;
 import aic.domain.OfferNotOpenException;
 import aic.domain.OfferStatus;
+import aic.domain.Rating;
 
 public class ContractServiceMock {
 	private HashMap<Long, CreditRequest> creditRequests = new HashMap<Long, CreditRequest>();
 	private HashMap<Long, Customer> customers = new HashMap<Long, Customer>();
+	
+	private Random generator = new Random();
+	
+	public ContractServiceMock(){
+		for (long i = 0; i <= 3; i++){
+			customers.put(
+					i,
+					new Customer(
+							i, 
+							"customer " + i,
+							new BigDecimal(generator.nextDouble()),
+							"lolstreet " + i,
+							Rating.AAA));
+		}
+	}
 	
 	public CreditRequest placeRequest(long customerId, Collection<Long> warrantorIds, int durationYears, Money money, String reason) throws NoSuchCustomerException{
 		if (customers.get(customerId) == null){
@@ -50,11 +68,23 @@ public class ContractServiceMock {
 	}
 	
 	private void generateOffersForRequest(CreditRequest request){
-		//TODO: generate new offers for credit request
+		for (int i = 0; i <= 3; i++){
+			request.getOffers().add(new Offer(System.currentTimeMillis(),
+										request, 
+										OfferStatus.Open, 
+										"random request " + i, 
+										generator.nextDouble()));
+		}
 	}
 	
 	private void declineOldOffersForRequest(CreditRequest request){
-		//TODO: set all old offers to declined
+		Offer currentOffer = null;
+		for(Iterator<Offer> iterator = request.getOffers().iterator(); iterator.hasNext();){
+			currentOffer = iterator.next();
+			if (currentOffer.getStatus() == OfferStatus.Open){
+				currentOffer.setStatus(OfferStatus.Declined);
+			}
+		}
 	}
 	
 	public CreditRequest changeRequest(long requestId, int durationYears, Money money, String reason) throws NoSuchRequestException{
