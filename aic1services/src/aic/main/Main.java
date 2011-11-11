@@ -1,5 +1,6 @@
 package aic.main;
 
+import aic.contract.ContractServiceImpl;
 import aic.rating.RatingService;
 import aic.rating.RatingServiceImpl;
 import demo.foobar.HelloWorldImpl;
@@ -18,14 +19,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
+	private static final String ADDRESS = "http://localhost:8000";
+	public static final String SERVICE_CONTRACT = ADDRESS + "/contract";
+
 	public static void main(String[] args) throws InterruptedException {
+
+
 		JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
 		sf.setResourceClasses(RatingService.class);
 		sf.setResourceProvider(RatingService.class,
 		                       new SingletonResourceProvider(new RatingServiceImpl()));
-		sf.setAddress("http://localhost:8000/");
+		sf.setAddress(ADDRESS);
 
 		sf.create();
+		Endpoint.publish("http://localhost:9000/helloWorld", new ContractServiceImpl());
+
 		System.out.println("Server ready...");
 
 		Thread.sleep(5 * 60 * 1000);
