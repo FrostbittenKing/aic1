@@ -37,7 +37,7 @@ public class ContractServiceMock {
 		}
 	}
 	
-	public CreditRequest placeRequest(long customerId, Collection<Long> warrantorIds, int durationYears, Money money, String reason) throws NoSuchCustomerException{
+	public Offer placeRequest(long customerId, Collection<Long> warrantorIds, int durationYears, Money money, String reason) throws NoSuchCustomerException{
 		if (customers.get(customerId) == null){
 			throw new NoSuchCustomerException();
 		}
@@ -49,8 +49,7 @@ public class ContractServiceMock {
 				money, 
 				reason);
 		creditRequests.put(request.getId(), request);
-		generateOffersForRequest(request);
-		return request;
+		return generateOfferForRequest(request);
 	}
 	
 	private ArrayList<Customer> getWarrantors(Collection<Long> warrantorIds) throws NoSuchCustomerException{
@@ -67,14 +66,14 @@ public class ContractServiceMock {
 		return warrantors;
 	}
 	
-	private void generateOffersForRequest(CreditRequest request){
-		for (int i = 0; i <= 3; i++){
-			request.getOffers().add(new Offer(System.currentTimeMillis(),
+	private Offer generateOfferForRequest(CreditRequest request){
+		Offer newOffer = new Offer(System.currentTimeMillis(),
 										request, 
 										OfferStatus.Open, 
-										"random request " + i, 
-										generator.nextDouble()));
-		}
+										"random request ", 
+										generator.nextDouble());
+		request.getOffers().add(newOffer);
+		return newOffer;
 	}
 	
 	private void declineOldOffersForRequest(CreditRequest request){
@@ -87,7 +86,7 @@ public class ContractServiceMock {
 		}
 	}
 	
-	public CreditRequest changeRequest(long requestId, int durationYears, Money money, String reason) throws NoSuchRequestException{
+	public Offer changeRequest(long requestId, int durationYears, Money money, String reason) throws NoSuchRequestException{
 		CreditRequest request = creditRequests.get(requestId);
 		if (request == null){
 			throw new NoSuchRequestException();
@@ -98,8 +97,7 @@ public class ContractServiceMock {
 		request.setReason(reason);
 		
 		declineOldOffersForRequest(request);
-		generateOffersForRequest(request);
-		return request;
+		return generateOfferForRequest(request);
 	}
 	
 	public Offer getOpenOffer(long requestId) throws NoSuchRequestException{
