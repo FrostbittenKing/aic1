@@ -1,4 +1,4 @@
-package aic.mock.contract;
+package aic.mock;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,14 +17,15 @@ import aic.domain.Offer;
 import aic.domain.OfferNotOpenException;
 import aic.domain.OfferStatus;
 import aic.domain.Rating;
+import aic.domain.dto.RequestRatings;
 
-public class ContractServiceMock {
+public class ServiceMock {
 	private HashMap<Long, CreditRequest> creditRequests = new HashMap<Long, CreditRequest>();
 	private HashMap<Long, Customer> customers = new HashMap<Long, Customer>();
 	
 	private Random generator = new Random();
 	
-	public ContractServiceMock(){
+	public ServiceMock(){
 		for (long i = 0; i <= 3; i++){
 			customers.put(
 					i,
@@ -37,7 +38,7 @@ public class ContractServiceMock {
 		}
 	}
 	
-	public Offer placeRequest(long customerId, Collection<Long> warrantorIds, int durationYears, Money money, String reason) throws NoSuchCustomerException{
+	public CreditRequest placeRequest(long customerId, Collection<Long> warrantorIds, int durationYears, Money money, String reason) throws NoSuchCustomerException{
 		if (customers.get(customerId) == null){
 			throw new NoSuchCustomerException();
 		}
@@ -49,7 +50,8 @@ public class ContractServiceMock {
 				money, 
 				reason);
 		creditRequests.put(request.getId(), request);
-		return generateOfferForRequest(request);
+		generateOfferForRequest(request);
+		return request;
 	}
 	
 	private ArrayList<Customer> getWarrantors(Collection<Long> warrantorIds) throws NoSuchCustomerException{
@@ -66,14 +68,12 @@ public class ContractServiceMock {
 		return warrantors;
 	}
 	
-	private Offer generateOfferForRequest(CreditRequest request){
-		Offer newOffer = new Offer(System.currentTimeMillis(),
+	private void generateOfferForRequest(CreditRequest request){
+		request.getOffers().add(new Offer(System.currentTimeMillis(),
 										request, 
 										OfferStatus.Open, 
 										"random request ", 
-										generator.nextDouble());
-		request.getOffers().add(newOffer);
-		return newOffer;
+										generator.nextDouble()));
 	}
 	
 	private void declineOldOffersForRequest(CreditRequest request){
@@ -86,7 +86,7 @@ public class ContractServiceMock {
 		}
 	}
 	
-	public Offer changeRequest(long requestId, int durationYears, Money money, String reason) throws NoSuchRequestException{
+	public CreditRequest changeRequest(long requestId, int durationYears, Money money, String reason) throws NoSuchRequestException{
 		CreditRequest request = creditRequests.get(requestId);
 		if (request == null){
 			throw new NoSuchRequestException();
@@ -97,7 +97,8 @@ public class ContractServiceMock {
 		request.setReason(reason);
 		
 		declineOldOffersForRequest(request);
-		return generateOfferForRequest(request);
+		generateOfferForRequest(request);
+		return request;
 	}
 	
 	public Offer getOpenOffer(long requestId) throws NoSuchRequestException{
@@ -147,5 +148,21 @@ public class ContractServiceMock {
 			}
 		}
 		throw new NoSuchOfferException();
+	}
+	
+	public RequestRatings getRequestRatings(long requestId) throws NoSuchRequestException{
+		CreditRequest request = creditRequests.get(requestId);
+		if (request == null){
+			throw new NoSuchRequestException();
+		}
+		
+		ArrayList<Rating> warrantorRatings = new ArrayList<Rating>();
+		for(Iterator<Customer> iterator = request.getWarrantors().iterator(); iterator.hasNext();){
+			warrantorRatings.add(iterator.next().getRating());
+		}
+		 RequestRatings ratings = new RequestRatings(
+				 						request.getCustomer().getRating(),
+				 						warrantorRatings);
+		return ratings;
 	}
 }
