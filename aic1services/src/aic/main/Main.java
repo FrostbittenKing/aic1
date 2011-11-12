@@ -15,13 +15,12 @@ import org.codehaus.jettison.mapped.MappedXMLOutputFactory;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.ws.Endpoint;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.logging.Logger;
 
 public class Main {
 	private static final String ADDRESS = "http://localhost:8000";
 	public static final String SERVICE_CONTRACT = ADDRESS + "/contract";
-
+	public static Logger logger = Logger.getLogger("ac.at.tuwien.infosys.ac11.services");
 	public static void main(String[] args) throws InterruptedException {
 
 

@@ -69,4 +69,14 @@ public class Request {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+
+	@Override
+	public String toString() {
+		return "Request [id=" + id + ", customerId=" + customerId
+				+ ", warrantorIds=" + warrantorIds + ", durationYears="
+				+ durationYears + ", currencyCode=" + currencyCode
+				+ ", amount=" + amount + ", reason=" + reason + "]";
+	}
+	
+	
 }

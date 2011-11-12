@@ -32,6 +32,4 @@ import javax.xml.bind.annotation.XmlType;
     BankTransfer.class
 })
 public abstract class DisbursementPreference {
-
-
 }

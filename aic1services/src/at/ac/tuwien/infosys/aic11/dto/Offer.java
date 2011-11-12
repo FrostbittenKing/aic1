@@ -40,4 +40,10 @@ public class Offer {
 	public void setRate(double rate) {
 		this.rate = rate;
 	}
+
+	@Override
+	public String toString() {
+		return "Offer [id=" + id + ", requestId=" + requestId + ", comment="
+				+ comment + ", rate=" + rate + "]";
+	}
 }

@@ -33,4 +33,12 @@ public class RequestRatings {
 	public void setWarrantorRatings(Collection<Rating> warrantorRatings) {
 		this.warrantorRatings = warrantorRatings;
 	}
+
+	@Override
+	public String toString() {
+		return "RequestRatings [customerRating=" + customerRating
+				+ ", warrantorRatings=" + warrantorRatings + "]";
+	}
+	
+	
 }

@@ -10,9 +10,13 @@ import at.ac.tuwien.infosys.aic11.services.Money;
 import javax.jws.WebParam;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContractServiceImpl implements ContractService {
+	Logger logger = Logger.getLogger("at.ac.tuwien.infosys.ac11.services.ContractServiceImpl");
 	public Request placeRequest(@WebParam(name = "request", targetNamespace = "") Request request) throws NoSuchCustomerException {
+		logger.log(Level.INFO, "Service placeRequest invoked with request: " + request);
 		Money money = new Money();
 		money.setAmount(request.getAmount());
 		money.setCurrencyCode(request.getCurrencyCode());
@@ -23,11 +27,13 @@ public class ContractServiceImpl implements ContractService {
 						request.getDurationYears(),
 						money,
 						request.getReason());
-
-		return buildRequestDTO(placedRequest);
+		Request returnRequest = buildRequestDTO(placedRequest);
+		logger.log(Level.INFO, "Service placeRequest returning placed request: " + returnRequest);
+		return returnRequest; 
 	}
 
 	public Request changeRequest(@WebParam(name = "request", targetNamespace = "") Request request) throws NoSuchRequestException {
+		logger.log(Level.INFO, "Service changeRequest invoked with request: " + request);
 		Money money = null;
 		if(request.getCurrencyCode() != null && request.getAmount() != null) {
 			money = new Money();
@@ -41,8 +47,10 @@ public class ContractServiceImpl implements ContractService {
 				money,
 				request.getReason()
 		);
-
-		return buildRequestDTO(updatedRequest);
+		
+		Request returnRequest = buildRequestDTO(updatedRequest);
+		logger.log(Level.INFO, "Service changeRequest returning placed request: " + returnRequest);
+		return returnRequest;
 	}
 
 	private static Request buildRequestDTO(CreditRequest ref) {
@@ -73,12 +81,14 @@ public class ContractServiceImpl implements ContractService {
 	public void acceptOffer(
 			@WebParam(name = "offer", targetNamespace = "")
 			Offer offer) throws NoSuchOfferException, OfferNotOpenException {
+		logger.log(Level.INFO, "Service acceptOffer invoked with offer: " + offer);
 		ServiceMock.getInstance().acceptOffer(offer.getId());
 	}
 
 	public void declineOffer(
 			@WebParam(name = "offer", targetNamespace = "")
 			Offer offer) throws NoSuchOfferException, OfferNotOpenException {
+		logger.log(Level.INFO, "Service declineOffer invoked with offer: " + offer);
 		ServiceMock.getInstance().declineOffer(offer.getId());
 	}
 }

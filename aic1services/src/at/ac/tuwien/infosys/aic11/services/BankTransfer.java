@@ -113,4 +113,9 @@ public class BankTransfer
         this.iban = value;
     }
 
+	@Override
+	public String toString() {
+		return "BankTransfer [bankName=" + bankName + ", bic=" + bic
+				+ ", iban=" + iban + "]";
+	}
 }
