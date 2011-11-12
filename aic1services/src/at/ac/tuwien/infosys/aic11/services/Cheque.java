@@ -59,4 +59,8 @@ public class Cheque
         this.name = value;
     }
 
+	@Override
+	public String toString() {
+		return "Cheque [name=" + name + "]";
+	}
 }

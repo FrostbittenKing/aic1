@@ -1,5 +1,8 @@
 package aic.domain;
 
+import at.ac.tuwien.infosys.aic11.services.Customer;
+import at.ac.tuwien.infosys.aic11.services.Money;
+
 import java.util.Collection;
 
 public class CreditRequest {
@@ -79,6 +82,6 @@ public class CreditRequest {
 			return false;
 		return true;
 	}
-	
-	
+
+
 }

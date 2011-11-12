@@ -2,7 +2,7 @@ package aic.main;
 
 import aic.contract.ContractService;
 import aic.domain.NoSuchCustomerException;
-import aic.domain.dto.Request;
+import at.ac.tuwien.infosys.aic11.dto.Request;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
@@ -29,7 +29,7 @@ public class RequestPlacer {
 		warrantors.add(2l);
 		r.setWarrantorIds(warrantors);
 		try {
-			System.out.println(client.placeRequest(r).getComment());
+			System.out.println(client.placeRequest(r).getCustomerId());
 		}
 		catch(NoSuchCustomerException e) {
 			e.printStackTrace();

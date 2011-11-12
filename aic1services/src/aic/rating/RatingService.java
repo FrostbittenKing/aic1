@@ -1,6 +1,6 @@
 package aic.rating;
 
-import aic.domain.dto.RequestRatings;
+import at.ac.tuwien.infosys.aic11.dto.RequestRatings;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
