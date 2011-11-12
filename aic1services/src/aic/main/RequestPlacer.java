@@ -29,7 +29,7 @@ public class RequestPlacer {
 		warrantors.add(2l);
 		r.setWarrantorIds(warrantors);
 		try {
-			System.out.println(client.placeRequest(r).getComment());
+			System.out.println(client.placeRequest(r).getCustomerId());
 		}
 		catch(NoSuchCustomerException e) {
 			e.printStackTrace();

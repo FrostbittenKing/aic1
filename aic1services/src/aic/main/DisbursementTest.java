@@ -1,17 +1,10 @@
 package aic.main;
 
-import aic.domain.Customer;
-import aic.domain.Money;
-import aic.domain.Rating;
 import at.ac.tuwien.infosys.aic11.services.BankTransfer;
 import at.ac.tuwien.infosys.aic11.services.Cheque;
 import at.ac.tuwien.infosys.aic11.services.DisbursementPreference;
 import at.ac.tuwien.infosys.aic11.services.IRegistryService_RegistryService_Client;
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
 import java.net.URL;
 
 public class DisbursementTest {
