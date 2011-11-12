@@ -14,6 +14,7 @@ public class HelloClient {
 		factory.setServiceClass(HelloWorld.class);
 		factory.setAddress("http://localhost:9000/helloWorld");
 		HelloWorld client = (HelloWorld) factory.create();
+		
 		DisbursementPreference bank = new BankTransfer();
 		((BankTransfer)bank).bankName = "foo";
 		((BankTransfer)bank).bic = "bar";

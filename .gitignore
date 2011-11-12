@@ -1,6 +1,28 @@
-apache-cxf-2.5.0/
-aic1services/aic1services.ipr
-aic1services/aic1services.iws
-aic1services/aic1services.iml
-aic1services/aicwsdl.iml
-aic1services/bin/
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.aux
+*.log
+*.out
+
+# unneccessary directories
+bin/
+.metadata/
+.classpath
+.settings/
+!.gitignore
+
+
+-apache-cxf-2.5.0/
+-aic1services/aic1services.ipr
+-aic1services/aic1services.iws
+-aic1services/aic1services.iml
+-aic1services/aicwsdl.iml
+-aic1services/bin/
+\#*
+.\#*
