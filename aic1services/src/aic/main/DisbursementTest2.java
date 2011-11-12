@@ -33,6 +33,6 @@ public class DisbursementTest2 {
 		Customer customer = new Customer();
 		customer.setAddress(new Address());
 
-		client.startMoneyTransferProcess(new at.ac.tuwien.infosys.aic11.disbursement.BankTransfer(), new Money(), customer);
+		client.startMoneyTransferProcess(pref, new Money(), customer);
 	}
 }
