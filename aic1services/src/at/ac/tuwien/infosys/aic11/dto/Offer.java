@@ -1,4 +1,4 @@
-package aic.domain.dto;
+package at.ac.tuwien.infosys.aic11.dto;
 
 import aic.domain.CreditRequest;
 import aic.domain.OfferStatus;
@@ -39,5 +39,11 @@ public class Offer {
 
 	public void setRate(double rate) {
 		this.rate = rate;
+	}
+
+	@Override
+	public String toString() {
+		return "Offer [id=" + id + ", requestId=" + requestId + ", comment="
+				+ comment + ", rate=" + rate + "]";
 	}
 }

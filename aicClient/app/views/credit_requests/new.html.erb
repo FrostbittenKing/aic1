@@ -1,0 +1,21 @@
+<h1>Credit Request</h1>
+
+<p>
+  This is the credit request page foo 
+  <p> Please enter your request</p>
+  
+  <%= form_for(@credit_request)  do |cr| %>
+  
+  <%= cr.fields_for :warrantors do |wa| %>
+  <p>
+    <%= wa.label :name%>
+    <%= wa.text_field :name, :size => 50 %>
+    <%= wa.check_box :_delete %>
+    <%= wa.label :_delete, 'delete' %>
+  </p>
+  <%= wa.submit 'Add warrantor', :name => "add_warrantor" %>
+  <%= wa.submit 'remove warrantor', :name => "remove_warrantor" %>
+   <% end %>     
+   <% end %>
+  
+</p>

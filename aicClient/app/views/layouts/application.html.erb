@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AicClient</title>
+  <title><%= title %></title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  <div class="container">
+    <%= render 'layouts/header' %>
+    <% flash.each do |key,value| %>
+    <div class="flash <%= key %>"><%= value %></div>
+    <% end %>
+  </div>
 <%= yield %>
 
 </body>

@@ -52,12 +52,15 @@ public final class IRegistryService_RegistryService_Client {
 
 		{
 			System.out.println("Invoking query...");
-			at.ac.tuwien.infosys.aic11.services.DisbursementPreference _query_arg0 = new BankTransfer();
-			((BankTransfer) _query_arg0).bankName = "foobar";
-			((BankTransfer) _query_arg0).bic = "1234";
-			((BankTransfer) _query_arg0).iban = "12342234";
+			at.ac.tuwien.infosys.aic11.services.DisbursementPreference bank = new BankTransfer();
+			((BankTransfer) bank).bankName = "foobar";
+			((BankTransfer) bank).bic = "1234";
+			((BankTransfer) bank).iban = "12342234";
+
+			at.ac.tuwien.infosys.aic11.services.DisbursementPreference cheque = new Cheque();
+			((Cheque) cheque).name = "rofl";
 			try {
-				at.ac.tuwien.infosys.aic11.services.WsdlEndpoint _query__return = port.query(_query_arg0);
+				at.ac.tuwien.infosys.aic11.services.WsdlEndpoint _query__return = port.query(cheque);
 				System.out.println("query.result=" + ((WsdlEndpoint) _query__return).getLocation());
 
 			}

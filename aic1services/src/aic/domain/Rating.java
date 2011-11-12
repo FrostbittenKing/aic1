@@ -1,12 +1,22 @@
 package aic.domain;
 
 public enum Rating {
-	AAA,
-	AAPlus,
-	AA,
-	AAMinus,
-	APlus,
-	A,
-	AMinus,
-	Defaulting
+	AAA("AAA"),
+	AAPlus("AAPlus"),
+	AA("AA"),
+	AAMinus("AAMinus"),
+	APlus("APlus"),
+	A("A"),
+	AMinus("AMinus"),
+	Defaulting("Defaulting");
+	
+	String rating = null;
+	private Rating(String rating){
+		this.rating = rating;
+	}
+	
+	@Override
+	public String toString(){
+		return rating;
+	}
 }

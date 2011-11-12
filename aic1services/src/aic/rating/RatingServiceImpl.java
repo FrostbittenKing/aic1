@@ -1,21 +1,25 @@
 package aic.rating;
 
-import aic.domain.Rating;
-import aic.domain.dto.RequestRatings;
+import aic.domain.NoSuchRequestException;
+import aic.mock.ServiceMock;
+import at.ac.tuwien.infosys.aic11.dto.RequestRatings;
 
-import javax.jws.WebParam;
-import javax.jws.WebService;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RatingServiceImpl implements RatingService {
+	private Logger logger = Logger.getLogger("ac.at.tuwien.infosys.ac11.services.RatingServiceImpl");
 	public RequestRatings getRequestRatings(@PathParam("id") long requestId) {
-		LinkedList<Rating> ratings = new LinkedList<Rating>();
-		ratings.add(Rating.A);
-		ratings.add(Rating.AAMinus);
-		return new RequestRatings(Rating.Defaulting, ratings);
+		logger.log(Level.INFO, "Service requestRatings called for requestId: " + requestId);
+		RequestRatings ratings = null;
+		try {
+			ratings = ServiceMock.getInstance().getRequestRatings(requestId);
+		}
+		catch (NoSuchRequestException e) {
+			logger.log(Level.SEVERE, "Service requestRatings failed, could not find requestId: " + requestId);
+		}
+		logger.log(Level.INFO, "Service requestRatings returning ratings for request Id: " + requestId + " " + ratings.toString());
+		return ratings;
 	}
 }
