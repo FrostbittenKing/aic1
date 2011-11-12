@@ -1,11 +1,7 @@
 package aic.shipping;
 
-import aic.domain.NoSuchCustomerException;
-import aic.domain.NoSuchOfferException;
 import aic.domain.NoSuchRequestException;
-import aic.domain.OfferNotOpenException;
-import aic.domain.dto.Offer;
-import aic.domain.dto.Request;
+import at.ac.tuwien.infosys.aic11.dto.Request;
 import at.ac.tuwien.infosys.aic11.services.DisbursementPreference;
 
 import javax.jws.WebMethod;

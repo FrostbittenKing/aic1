@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.Random;
 
 import aic.domain.CreditRequest;
-import aic.domain.Customer;
-import aic.domain.Money;
 import aic.domain.NoSuchCustomerException;
 import aic.domain.NoSuchOfferException;
 import aic.domain.NoSuchRequestException;
@@ -17,7 +15,9 @@ import aic.domain.Offer;
 import aic.domain.OfferNotOpenException;
 import aic.domain.OfferStatus;
 import aic.domain.Rating;
-import aic.domain.dto.RequestRatings;
+import at.ac.tuwien.infosys.aic11.dto.RequestRatings;
+import at.ac.tuwien.infosys.aic11.services.Customer;
+import at.ac.tuwien.infosys.aic11.services.Money;
 
 public class ServiceMock {
 	private static ServiceMock instance = null;

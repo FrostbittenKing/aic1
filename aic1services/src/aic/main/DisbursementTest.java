@@ -1,35 +1,18 @@
 package aic.main;
 
-import aic.contract.ContractService;
 import aic.domain.Customer;
 import aic.domain.Money;
-import aic.domain.NoSuchCustomerException;
 import aic.domain.Rating;
-import aic.domain.dto.Request;
 import at.ac.tuwien.infosys.aic11.services.BankTransfer;
 import at.ac.tuwien.infosys.aic11.services.Cheque;
 import at.ac.tuwien.infosys.aic11.services.DisbursementPreference;
 import at.ac.tuwien.infosys.aic11.services.IRegistryService_RegistryService_Client;
 import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.endpoint.ClientImpl;
-import org.apache.cxf.endpoint.Endpoint;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
-import org.apache.cxf.service.model.*;
 
-import javax.xml.namespace.QName;
-import java.beans.PropertyDescriptor;
-import java.io.File;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 public class DisbursementTest {
 	private void execute(String args[]) throws Exception {
@@ -47,7 +30,7 @@ public class DisbursementTest {
 
 		System.out.println(wsdlURL);
 
-		JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
+/*		JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
 		Client client = dcf.createClient(wsdlURL, this.getClass().getClassLoader());
 
 		Customer refCustomer = new Customer(0, "bob", new BigDecimal(10), "gaystreet", Rating.A);
@@ -56,10 +39,10 @@ public class DisbursementTest {
 		Money refMoney = new Money("235235", 230l);
 		Object money = makeMoney(refMoney);
 
-		Object response = client.invoke("start_money_transfer_process", pref, money, customer);
+		Object response = client.invoke("start_money_transfer_process", pref, money, customer);*/
 	}
 
-	private Object makeStartMoneyTransferProcess(Object preference, Object money, Object customer) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+/*	private Object makeStartMoneyTransferProcess(Object preference, Object money, Object customer) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 		Object process = Thread.currentThread().getContextClassLoader().loadClass("at.ac.tuwien.infosys.aic11.services.StartMoneyTransferProcess").newInstance();
 		process.getClass().getMethod("setArg0", preference.getClass().getSuperclass()).invoke(process, preference);
 		process.getClass().getMethod("setArg1", money.getClass()).invoke(process, money);
@@ -94,7 +77,7 @@ public class DisbursementTest {
 		money.getClass().getMethod("setCurrencyCode", String.class).invoke(money, ref.getCurrencyCode());
 
 		return money;
-	}
+	}*/
 
 
 	public static void main(String args[]) throws Exception {

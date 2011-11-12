@@ -1,7 +1,7 @@
 package aic.shipping;
 
 import aic.domain.NoSuchRequestException;
-import aic.domain.dto.Request;
+import at.ac.tuwien.infosys.aic11.dto.Request;
 import aic.mock.ServiceMock;
 import at.ac.tuwien.infosys.aic11.services.DisbursementPreference;
 

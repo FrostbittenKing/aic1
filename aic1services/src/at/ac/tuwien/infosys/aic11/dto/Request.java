@@ -1,4 +1,4 @@
-package aic.domain.dto;
+package at.ac.tuwien.infosys.aic11.dto;
 
 import java.util.Collection;
 

@@ -1,59 +1,74 @@
 package aic.contract;
 
 import aic.domain.*;
-import aic.domain.dto.*;
-import aic.domain.dto.Offer;
 import aic.mock.ServiceMock;
+import at.ac.tuwien.infosys.aic11.dto.*;
+import at.ac.tuwien.infosys.aic11.dto.Offer;
+import at.ac.tuwien.infosys.aic11.services.Customer;
+import at.ac.tuwien.infosys.aic11.services.Money;
 
 import javax.jws.WebParam;
+import java.util.Collection;
+import java.util.LinkedList;
 
 public class ContractServiceImpl implements ContractService {
-	public Offer placeRequest(@WebParam(name = "request", targetNamespace = "") Request request) throws NoSuchCustomerException {
+	public Request placeRequest(@WebParam(name = "request", targetNamespace = "") Request request) throws NoSuchCustomerException {
+		Money money = new Money();
+		money.setAmount(request.getAmount());
+		money.setCurrencyCode(request.getCurrencyCode());
 		CreditRequest placedRequest =
 				ServiceMock.getInstance().placeRequest(
 						request.getCustomerId(),
 						request.getWarrantorIds(),
 						request.getDurationYears(),
-						new Money(request.getCurrencyCode(), request.getAmount()),
+						money,
 						request.getReason());
-		aic.domain.Offer requestOffer = null;
-		try {
-			requestOffer = ServiceMock.getInstance().getOpenOffer(placedRequest.getId());
-		}
-		catch(NoSuchRequestException e) {
-			assert false;
-		}
 
-		return buildOfferDTO(requestOffer);
+		return buildRequestDTO(placedRequest);
 	}
 
-	public Offer changeRequest(@WebParam(name = "request", targetNamespace = "") Request request) throws NoSuchRequestException {
+	public Request changeRequest(@WebParam(name = "request", targetNamespace = "") Request request) throws NoSuchRequestException {
+		Money money = null;
+		if(request.getCurrencyCode() != null && request.getAmount() != null) {
+			money = new Money();
+			money.setAmount(request.getAmount());
+			money.setCurrencyCode(request.getCurrencyCode());
+		}
+
 		CreditRequest updatedRequest = ServiceMock.getInstance().changeRequest(
 				request.getId(),
 				request.getDurationYears(),
-				(request.getCurrencyCode() != null && request.getAmount() != null) ? new Money(request.getCurrencyCode(), request.getAmount()) : null,
+				money,
 				request.getReason()
 		);
 
-		aic.domain.Offer requestOffer = null;
-		try {
-			requestOffer = ServiceMock.getInstance().getOpenOffer(updatedRequest.getId());
-		}
-		catch(NoSuchRequestException e) {
-			assert false;
-		}
-
-		return buildOfferDTO(requestOffer);
+		return buildRequestDTO(updatedRequest);
 	}
 
-	private Offer buildOfferDTO(aic.domain.Offer offer) {
-		Offer dto = new Offer();
-		dto.setComment(offer.getComment());
-		dto.setId(offer.getId());
-		dto.setRequestId(offer.getRequest().getId());
-		dto.setRate(offer.getRate());
-		return dto;
+	private static Request buildRequestDTO(CreditRequest ref) {
+		Request request = new Request();
+		request.setAmount(ref.getMoney().getAmount());
+		request.setCurrencyCode(ref.getMoney().getCurrencyCode());
+		request.setCustomerId(ref.getCustomer().getCustomerId());
+		request.setDurationYears(ref.getDurationYears());
+		request.setId(ref.getId());
+		request.setReason(ref.getReason());
+		Collection<Long> warrantorIds = new LinkedList<Long>();
+		for(Customer warrantor : ref.getWarrantors()) {
+			warrantorIds.add(warrantor.getCustomerId());
+		}
+		request.setWarrantorIds(warrantorIds);
+		return request;
 	}
+
+//	private at.ac.tuwien.infosys.aic11.dto.Offer buildOfferDTO(aic.domain.Offer offer) {
+//		at.ac.tuwien.infosys.aic11.dto.Offer dto = new at.ac.tuwien.infosys.aic11.dto.Offer();
+//		dto.setComment(offer.getComment());
+//		dto.setId(offer.getId());
+//		dto.setRequestId(offer.getRequest().getId());
+//		dto.setRate(offer.getRate());
+//		return dto;
+//	}
 
 	public void acceptOffer(
 			@WebParam(name = "offer", targetNamespace = "")
