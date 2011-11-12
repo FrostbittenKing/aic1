@@ -1,4 +1,11 @@
 AicClient::Application.routes.draw do
+
+    resources :credit_requests
+  get "credit_requests/new"
+  get "pages/credit_request"
+
+#  get "pages/CreditRequest"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

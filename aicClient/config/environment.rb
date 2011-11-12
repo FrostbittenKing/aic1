@@ -7,4 +7,4 @@ AicClient::Application.initialize!
 ENV['CXF_LIB_PATH'] = "#{ENV['CXF_HOME']}/lib/"
 Rjb::load("../ClerkLibrary/bin/:" + Dir.glob(ENV['CXF_LIB_PATH'] + "*.jar").join(":"))
 
-p Rjb::import("aic.domain.dto.Request")
+CreditRequestJava = Rjb::import("aic.domain.dto.Request")
