@@ -12,6 +12,15 @@ public class Customer {
 	public Customer() {
 	}
 
+	public Customer(long id, String name, BigDecimal openBalance,
+			String address, Rating rating) {
+		this.id = id;
+		this.name = name;
+		this.openBalance = openBalance;
+		this.address = address;
+		this.rating = rating;
+	}
+
 	public Rating getRating() {
 		return rating;
 	}
@@ -51,4 +60,20 @@ public class Customer {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 }

@@ -32,7 +32,7 @@ public class Main {
 		sf.setAddress(ADDRESS);
 
 		sf.create();
-		Endpoint.publish("http://localhost:9000/helloWorld", new ContractServiceImpl());
+		Endpoint.publish("http://localhost:9000/helloWorld", new ContractServiceImpl()).getProperties();
 
 		System.out.println("Server ready...");
 

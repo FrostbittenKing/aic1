@@ -3,37 +3,67 @@ package aic.contract;
 import aic.domain.*;
 import aic.domain.dto.*;
 import aic.domain.dto.Offer;
+import aic.mock.ServiceMock;
 
 import javax.jws.WebParam;
 
 public class ContractServiceImpl implements ContractService {
 	public Offer placeRequest(@WebParam(name = "request", targetNamespace = "") Request request) throws NoSuchCustomerException {
-		Offer mock = new Offer();
-		mock.setComment("some star fish are hermaphrodites");
-		mock.setId(666);
-		mock.setRequestId(444);
-		mock.setRate(9001d);
-		return mock;
+		CreditRequest placedRequest =
+				ServiceMock.getInstance().placeRequest(
+						request.getCustomerId(),
+						request.getWarrantorIds(),
+						request.getDurationYears(),
+						new Money(request.getCurrencyCode(), request.getAmount()),
+						request.getReason());
+		aic.domain.Offer requestOffer = null;
+		try {
+			requestOffer = ServiceMock.getInstance().getOpenOffer(placedRequest.getId());
+		}
+		catch(NoSuchRequestException e) {
+			assert false;
+		}
+
+		return buildOfferDTO(requestOffer);
 	}
 
 	public Offer changeRequest(@WebParam(name = "request", targetNamespace = "") Request request) throws NoSuchRequestException {
-		Offer mock = new Offer();
-		mock.setComment("other star fish turn from males into females as they mature");
-		mock.setId(666);
-		mock.setRequestId(444);
-		mock.setRate(5.2352d);
-		return mock;
+		CreditRequest updatedRequest = ServiceMock.getInstance().changeRequest(
+				request.getId(),
+				request.getDurationYears(),
+				(request.getCurrencyCode() != null && request.getAmount() != null) ? new Money(request.getCurrencyCode(), request.getAmount()) : null,
+				request.getReason()
+		);
+
+		aic.domain.Offer requestOffer = null;
+		try {
+			requestOffer = ServiceMock.getInstance().getOpenOffer(updatedRequest.getId());
+		}
+		catch(NoSuchRequestException e) {
+			assert false;
+		}
+
+		return buildOfferDTO(requestOffer);
+	}
+
+	private Offer buildOfferDTO(aic.domain.Offer offer) {
+		Offer dto = new Offer();
+		dto.setComment(offer.getComment());
+		dto.setId(offer.getId());
+		dto.setRequestId(offer.getRequest().getId());
+		dto.setRate(offer.getRate());
+		return dto;
 	}
 
 	public void acceptOffer(
 			@WebParam(name = "offer", targetNamespace = "")
 			Offer offer) throws NoSuchOfferException, OfferNotOpenException {
-		return;
+		ServiceMock.getInstance().acceptOffer(offer.getId());
 	}
 
 	public void declineOffer(
 			@WebParam(name = "offer", targetNamespace = "")
 			Offer offer) throws NoSuchOfferException, OfferNotOpenException {
-		return;
+		ServiceMock.getInstance().declineOffer(offer.getId());
 	}
 }

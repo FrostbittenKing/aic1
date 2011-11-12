@@ -65,4 +65,20 @@ public class CreditRequest {
 	public boolean isClosed() {
 		return closed;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CreditRequest other = (CreditRequest) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 }
