@@ -16,6 +16,7 @@ import aic.domain.OfferNotOpenException;
 import aic.domain.OfferStatus;
 import aic.domain.Rating;
 import at.ac.tuwien.infosys.aic11.dto.RequestRatings;
+import at.ac.tuwien.infosys.aic11.services.Address;
 import at.ac.tuwien.infosys.aic11.services.Customer;
 import at.ac.tuwien.infosys.aic11.services.Money;
 
@@ -24,20 +25,29 @@ public class ServiceMock {
 
 	private HashMap<Long, CreditRequest> creditRequests = new HashMap<Long, CreditRequest>();
 	private HashMap<Long, Customer> customers = new HashMap<Long, Customer>();
+	private HashMap<Long, Rating> customerRatings = new HashMap<Long, Rating>();
 
 	private Random generator = new Random();
 
 	private ServiceMock() {
+		Address address = new Address();
+		address.setCity("pwntown");
+		address.setCountryCode("US");
+		address.setDoor("1337");
+		address.setHouse("house of awesome");
+		address.setPostalCode("9001");
+		address.setStreet("unicornstreet");
 		for(long i = 0; i <= 3; i++) {
-			customers.put(
-					i,
-					new Customer(
-							i,
-							"customer " + i,
-							new BigDecimal(generator.nextDouble()),
-							"lolstreet " + i,
-							Rating.AAA));
+			customers.put(i,
+					new Customer());
+			customers.get(i).setCustomerId(i);
+			customers.get(i).setFirstName("loller"+i);
+			customers.get(i).setMiddleName("skater"+i);
+			customers.get(i).setLastName("roflcopter"+i);
+			customers.get(i).setAddress(address);
+			customerRatings.put(i, Rating.AAA);
 		}
+		
 	}
 
 	public CreditRequest placeRequest(long customerId, Collection<Long> warrantorIds, int durationYears, Money money, String reason) throws NoSuchCustomerException {
@@ -173,10 +183,10 @@ public class ServiceMock {
 
 		ArrayList<Rating> warrantorRatings = new ArrayList<Rating>();
 		for(Iterator<Customer> iterator = request.getWarrantors().iterator(); iterator.hasNext();) {
-			warrantorRatings.add(iterator.next().getRating());
+			warrantorRatings.add(customerRatings.get(iterator.next().getCustomerId()));
 		}
 		RequestRatings ratings = new RequestRatings(
-				request.getCustomer().getRating(),
+				customerRatings.get(request.getCustomer().getCustomerId()),
 				warrantorRatings);
 		return ratings;
 	}
