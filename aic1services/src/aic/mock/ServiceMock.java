@@ -187,4 +187,9 @@ public class ServiceMock {
 		}
 		return instance;
 	}
+
+	public CreditRequest getRequest(Long id) {
+		//todo
+		return null;
+	}
 }
