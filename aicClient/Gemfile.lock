@@ -130,6 +130,7 @@ GEM
     uglifier (1.0.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    validatable (1.6.7)
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -153,4 +154,5 @@ DEPENDENCIES
   sass-rails (~> 3.1.4)
   sqlite3-ruby
   uglifier (>= 1.0.3)
+  validatable
   webrat

@@ -3,8 +3,8 @@ import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 
 import aic.contract.ContractService;
 import aic.domain.NoSuchCustomerException;
-import aic.domain.dto.Offer;
-import aic.domain.dto.Request;
+import at.ac.tuwien.infosys.aic11.dto.Offer;
+import at.ac.tuwien.infosys.aic11.dto.Request;
 
 
 public class Clerk {
@@ -21,7 +21,7 @@ public class Clerk {
 		return _instance;
 	}
 	
-	public Offer createRequest(Request request) throws NoSuchCustomerException{
-		return	contractService.placeRequest(request);
+	public Request createRequest(Request request) throws NoSuchCustomerException{
+			return contractService.placeRequest(request);
 	}
 }

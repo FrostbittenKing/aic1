@@ -6,16 +6,43 @@
   
   <%= form_for(@credit_request)  do |cr| %>
   
+  <%= render 'shared/error_messages' %>
+  
   <%= cr.fields_for :warrantors do |wa| %>
-  <p>
-    <%= wa.label :name%>
-    <%= wa.text_field :name, :size => 50 %>
-    <%= wa.check_box :_delete %>
-    <%= wa.label :_delete, 'delete' %>
-  </p>
+  <div class="field">
+    <%= wa.label :customerId %>
+    <%= wa.text_field :customerId %>
+  </div>
+  <div class="field">
+    <%= wa.label :durationYears %>
+    <%= wa.text_field :durationYears %>
+  </div>
+  <div class="field">
+    <%= wa.label :currencyCode %>
+    <%= wa.text_field :currencyCode %>
+  </div>
+  <div class="field">
+    <%= wa.label :amount %>
+    <%= wa.text_field :amount %>
+  </div>
+  
+  <div class="field">
+    <%= wa.label :reason %>
+    <%= wa.text_field :reason %>
+  </div>
+  
+  
+  <%= wa.label :name %>
+  <%= wa.text_field :warrantors, :size => 50 %>
   <%= wa.submit 'Add warrantor', :name => "add_warrantor" %>
   <%= wa.submit 'remove warrantor', :name => "remove_warrantor" %>
-   <% end %>     
-   <% end %>
+<% end %>
+
   
+  <div class="actions">
+    <%= cr.submit "create request" %>
+  </div>
+  <% end %>
+  
+  <%= render 'credit_requests/sent' %>
 </p>

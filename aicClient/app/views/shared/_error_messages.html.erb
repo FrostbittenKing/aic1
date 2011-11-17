@@ -1,0 +1,13 @@
+<% if @credit_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@credit_request.errors.count, "eror") %>
+      prohibited the credit request to be processed:</h2>
+      <p> Problems with following fields </p>
+      <ul>
+           <% @credit_request.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+           <% end %>
+      </ul>
+    </div>
+<% end %>
+
