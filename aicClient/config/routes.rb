@@ -1,5 +1,11 @@
 AicClient::Application.routes.draw do
 
+  get "offers/getRating"
+
+  get "offers/generateOffer"
+
+  get "offers/placeOffer"
+
     resources :credit_requests
   get "credit_requests/new"
   get "pages/credit_request"

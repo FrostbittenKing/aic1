@@ -3,8 +3,11 @@ package aic.main;
 import aic.contract.ContractService;
 import aic.domain.NoSuchCustomerException;
 import at.ac.tuwien.infosys.aic11.dto.Request;
+import at.ac.tuwien.infosys.aic11.dto.RequestRatings;
+
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 
 import java.util.Collection;
@@ -28,8 +31,15 @@ public class RequestPlacer {
 		warrantors.add(1l);
 		warrantors.add(2l);
 		r.setWarrantorIds(warrantors);
+		
 		try {
-			System.out.println(client.placeRequest(r).getCustomerId());
+			r = client.placeRequest(r);
+			System.out.println(r.getId());
+			WebClient webClient = WebClient.create("http://localhost:8000");
+			webClient.path("rating/" + r.getId());
+			webClient.accept("text/html,application/xhtml+xml,application/xml");
+			webClient.acceptEncoding("gzip, deflate");
+			webClient.get(RequestRatings.class);
 		}
 		catch(NoSuchCustomerException e) {
 			e.printStackTrace();

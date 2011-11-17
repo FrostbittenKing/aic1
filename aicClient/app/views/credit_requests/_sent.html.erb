@@ -1,0 +1,13 @@
+
+<% if @credit_request.valid? %>
+<div id ="successful_request">
+  CustomerID: <%= @credit_request.customerId %></br>
+  Duration: <%= @credit_request.durationYears %></br>
+  CurrencyCode: <%= @credit_request.currencyCode %>  </br>
+  Amount: <%= @credit_request.amount %> </br>
+  Reason: <%= @credit_request.reason %> </br>
+  Warrantors: <%= @credit_request.warrantors.each do |warrant| %>
+  <li><%= warrant %></li>
+  <% end %>
+</div>
+<% end %>
